@@ -2,7 +2,6 @@
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/diogo-graciano/nfephp.svg?style=flat-square)](https://packagist.org/packages/diogo-graciano/nfephp)
 [![Total Downloads](https://img.shields.io/packagist/dt/diogo-graciano/nfephp.svg?style=flat-square)](https://packagist.org/packages/diogo-graciano/nfephp)
-![GitHub Actions](https://github.com/diogo-graciano/nfephp/actions/workflows/main.yml/badge.svg)
 
 Um pacote Laravel elegante e prático para integração com o NFePHP, facilitando a emissão e gestão de Notas Fiscais Eletrônicas (NFe) e Notas Fiscais de Consumidor Eletrônicas (NFCe) em aplicações Laravel.
 
@@ -28,7 +27,7 @@ Um pacote Laravel elegante e prático para integração com o NFePHP, facilitand
 Instale o pacote via Composer:
 
 ```bash
-composer require diogo-graciano/nfephp
+composer require diogo-graciano/nfephp-laravel
 ```
 
 ### Publicar configurações
@@ -222,21 +221,6 @@ src/
 ],
 ```
 
-## 🔧 Comandos Artisan
-
-O pacote inclui comandos Artisan para facilitar o desenvolvimento:
-
-```bash
-# Listar comandos disponíveis
-php artisan list nfephp
-
-# Verificar status do certificado
-php artisan nfephp:certificate:status
-
-# Verificar configuração
-php artisan nfephp:config:check
-```
-
 ## 🐛 Troubleshooting
 
 ### Problemas Comuns
@@ -284,7 +268,7 @@ Veja o [CHANGELOG](CHANGELOG.md) para informações sobre mudanças recentes.
 
 ## 👥 Créditos
 
-- [Diogo Graciano Comin](https://github.com/diogo-graciano) - Desenvolvedor principal
+- [Diogo Graciano Comin](https://github.com/DiogoGraciano) - Desenvolvedor principal
 - [NFePHP Community](https://github.com/nfephp-org) - Biblioteca base
 - [Todos os Contribuidores](../../contributors)
 
