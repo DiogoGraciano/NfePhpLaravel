@@ -1,0 +1,73 @@
+{
+    "name": "diogo-graciano/nfephp",
+    "description": "Um pacote Laravel elegante e prático para integração com o NFePHP, facilitando a emissão e gestão de Notas Fiscais Eletrônicas (NFe) e Notas Fiscais de Consumidor Eletrônicas (NFCe) em aplicações Laravel",
+    "keywords": [
+        "diogo-graciano",
+        "nfephp"
+    ],
+    "homepage": "https://github.com/diogo-graciano/nfephp",
+    "license": "MIT",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Diogo Graciano Comin",
+            "email": "diogo.dg691@gmail.com",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^8.2",
+        "illuminate/support": "^12.0",
+        "nfephp-org/sped-nfe": "^5.1"
+    },
+    "require-dev": {
+        "friendsofphp/php-cs-fixer": "^3.0",
+        "mockery/mockery": "^1.6",
+        "orchestra/testbench": "^10.0",
+        "phpstan/phpstan": "^2.0",
+        "phpunit/php-code-coverage": "^12.4",
+        "phpunit/phpunit": "^12.0",
+        "squizlabs/php_codesniffer": "^3.7"
+    },
+    "autoload": {
+        "psr-4": {
+            "DiogoGraciano\\Nfephp\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "DiogoGraciano\\Nfephp\\Tests\\": "tests"
+        }
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit",
+        "test-coverage": "vendor/bin/phpunit --coverage-html coverage",
+        "phpstan": "vendor/bin/phpstan analyse",
+        "php-cs-fixer": "vendor/bin/php-cs-fixer fix --dry-run --diff",
+        "php-cs-fixer-fix": "vendor/bin/php-cs-fixer fix",
+        "phpcs": "vendor/bin/phpcs --standard=PSR12 src/",
+        "phpcbf": "vendor/bin/phpcbf --standard=PSR12 src/",
+        "lint": [
+            "@phpstan",
+            "@php-cs-fixer",
+            "@phpcs"
+        ],
+        "lint-fix": [
+            "@php-cs-fixer-fix",
+            "@phpcbf"
+        ]
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "DiogoGraciano\\Nfephp\\NfephpServiceProvider"
+            ],
+            "aliases": {
+                "Nfephp": "DiogoGraciano\\Nfephp\\NfephpFacade"
+            }
+        }
+    }
+}

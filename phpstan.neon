@@ -1,0 +1,16 @@
+parameters:
+    level: 8
+    paths:
+        - src
+    treatPhpDocTypesAsCertain: false
+    ignoreErrors:
+        - '#Call to an undefined method#'
+        - identifier: missingType.iterableValue
+        - identifier: missingType.generics
+        - '#Access to protected property#'
+        - '#Negated boolean expression is always false#'
+        - '#Using nullsafe method call on non-nullable type#'
+        - '#Parameter.*expects.*string.*given#'
+        - '#Method.*should return string but returns.*#'
+        - '#Offset.*does not exist on.*#'
+    reportUnmatchedIgnoredErrors: false

@@ -1,0 +1,91 @@
+# Dependências
+/vendor/
+/node_modules/
+
+# Arquivos de cache e temporários
+*.cache
+*.tmp
+*.temp
+.cache/
+.tmp/
+.temp/
+
+# Arquivos de log
+*.log
+logs/
+storage/logs/
+
+# Arquivos de cobertura de testes
+/coverage/
+coverage.xml
+clover.xml
+phpunit.xml.dist
+
+# Arquivos de IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Arquivos do sistema operacional
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Arquivos de configuração local
+.env
+.env.local
+.env.*.local
+
+# Arquivos de build e distribuição
+/build/
+/dist/
+*.phar
+
+# Arquivos de backup
+*.bak
+*.backup
+*.old
+
+# Arquivos de sessão PHP
+sess_*
+
+# Arquivos de upload temporários
+uploads/temp/
+
+# Arquivos de configuração específicos do ambiente
+config/local.php
+config/database.local.php
+
+# Arquivos de cache do Composer
+composer.phar
+composer.lock.backup
+
+# Arquivos de análise estática
+.phpstan/
+.php-cs-fixer.cache
+
+# Arquivos de documentação gerada
+docs/build/
+docs/_build/
+
+# Arquivos de teste temporários
+/tests/temp/
+/tests/fixtures/temp/
+
+# Arquivos de certificados e chaves (se houver)
+*.pem
+*.key
+*.crt
+*.p12
+certificados/
+certificates/
+
+# Arquivos de configuração de NF-e (se houver)
+config/nfe/
+storage/nfe/
