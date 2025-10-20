@@ -1,11 +1,12 @@
 {
-    "name": "diogo-graciano/nfephp",
+    "name": "diogo-graciano/nfephp-laravel",
     "description": "Um pacote Laravel elegante e prático para integração com o NFePHP, facilitando a emissão e gestão de Notas Fiscais Eletrônicas (NFe) e Notas Fiscais de Consumidor Eletrônicas (NFCe) em aplicações Laravel",
     "keywords": [
         "diogo-graciano",
-        "nfephp"
+        "nfephp",
+        "laravel"
     ],
-    "homepage": "https://github.com/diogo-graciano/nfephp",
+    "homepage": "https://github.com/DiogoGraciano/NfePhpLaravel",
     "license": "MIT",
     "type": "library",
     "authors": [
