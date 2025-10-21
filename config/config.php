@@ -46,47 +46,4 @@ return [
             'proxyPass' => env('NFEPHP_PROXY_PASSWORD', ''),
         ],
     ],
-
-    /*
-     * Configurações de paths para arquivos
-     */
-    'paths' => [
-        'schemes' => storage_path('app/nfephp/schemes'),
-        'nfe' => storage_path('app/nfephp/nfe'),
-        'nfce' => storage_path('app/nfephp/nfce'),
-        'csc' => storage_path('app/nfephp/csc'),
-        'csp' => storage_path('app/nfephp/csp'),
-        'logs' => storage_path('logs/nfephp'),
-        'cacerts' => storage_path('app/nfephp/cacerts'),
-        'arquivos' => storage_path('app/nfephp/arquivos'),
-        'tmp' => storage_path('app/nfephp/tmp'),
-    ],
-
-    /*
-     * Configurações de ambiente
-     */
-    'environment' => [
-        'production' => (bool) env('NFEPHP_PRODUCTION', false),
-        'debug' => (bool) env('NFEPHP_DEBUG', false),
-    ],
-
-    /*
-     * Configurações de timeout
-     */
-    'timeout' => [
-        'connection' => (int) env('NFEPHP_TIMEOUT_CONNECTION', 30),
-        'read' => (int) env('NFEPHP_TIMEOUT_READ', 60),
-    ],
-
-    /*
-     * Configurações de contingência
-     * 
-     * IMPORTANTE: As contingências são ativadas dinamicamente via código,
-     * mas você pode definir configurações padrão aqui.
-     */
-    'contingency' => [
-        'auto_activate' => (bool) env('NFEPHP_CONTINGENCY_AUTO_ACTIVATE', false),
-        'default_motive' => env('NFEPHP_CONTINGENCY_DEFAULT_MOTIVE', 'SEFAZ fora do ar'),
-        'default_type' => env('NFEPHP_CONTINGENCY_DEFAULT_TYPE', ''), // SVCAN, SVCRS ou vazio para automático
-    ],
 ];
