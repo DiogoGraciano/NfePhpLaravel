@@ -58,8 +58,6 @@ NFEPHP_CERTIFICATE_PASSWORD="sua_senha"
 NFEPHP_TOKEN_IBPT="seu_token_ibpt"
 NFEPHP_CSC="seu_csc"
 NFEPHP_CSC_ID="seu_csc_id"
-NFEPHP_DEBUG=false
-NFEPHP_PRODUCTION=false
 ```
 
 ## 📖 Uso
@@ -185,40 +183,6 @@ src/
 ├── NfephpCore.php           # Classe base
 ├── NfephpFacade.php         # Facade do Laravel
 └── NfephpServiceProvider.php # Service Provider
-```
-
-## ⚙️ Configuração Avançada
-
-### Configuração de Contingência
-
-```php
-// Configuração automática de contingência
-'contingency' => [
-    'auto_activate' => true,
-    'default_motive' => 'SEFAZ fora do ar',
-    'default_type' => 'SVCAN', // SVCAN, SVCRS ou vazio para automático
-],
-```
-
-### Configuração de Timeouts
-
-```php
-'timeout' => [
-    'connection' => 30, // Timeout de conexão em segundos
-    'read' => 60,       // Timeout de leitura em segundos
-],
-```
-
-### Configuração de Paths
-
-```php
-'paths' => [
-    'schemes' => storage_path('app/nfephp/schemes'),
-    'nfe' => storage_path('app/nfephp/nfe'),
-    'nfce' => storage_path('app/nfephp/nfce'),
-    'logs' => storage_path('logs/nfephp'),
-    // ... outros paths
-],
 ```
 
 ## 🐛 Troubleshooting
