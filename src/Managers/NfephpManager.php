@@ -1,6 +1,6 @@
 <?php
 
-namespace DiogoGraciano\Nfephp;
+namespace DiogoGraciano\Nfephp\Managers;
 
 use DiogoGraciano\Nfephp\Managers\CertificateManager;
 use DiogoGraciano\Nfephp\Managers\ContingencyManager;
@@ -11,7 +11,7 @@ use NFePHP\NFe\Factories\QRCode;
 use NFePHP\NFe\Make;
 use NFePHP\NFe\Tools;
 
-class NfephpCore
+abstract class NfephpManager
 {
     /**
      * Instância do Make para criação de NFe

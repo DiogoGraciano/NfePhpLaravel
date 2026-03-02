@@ -67,7 +67,7 @@
                 "DiogoGraciano\\Nfephp\\NfephpServiceProvider"
             ],
             "aliases": {
-                "Nfephp": "DiogoGraciano\\Nfephp\\NfephpFacade"
+                "Nfephp": "DiogoGraciano\\Nfephp\\Facades\\Nfephp"
             }
         }
     }

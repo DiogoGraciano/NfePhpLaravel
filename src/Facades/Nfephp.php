@@ -1,13 +1,13 @@
 <?php
 
-namespace DiogoGraciano\Nfephp;
+namespace DiogoGraciano\Nfephp\Facades;
 
 use Illuminate\Support\Facades\Facade;
 
 /**
  * @see \DiogoGraciano\Nfephp\Nfephp
  */
-class NfephpFacade extends Facade
+class Nfephp extends Facade
 {
     /**
      * Get the registered name of the component.

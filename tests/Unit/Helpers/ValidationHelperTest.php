@@ -10,8 +10,13 @@ class ValidationHelperTest extends TestCase
     public function testValidateXml(): void
     {
         $xml = '<?xml version="1.0" encoding="UTF-8"?><root><test>value</test></root>';
-        $xsd = __DIR__ . '/../../fixtures/test.xsd';
-        
+        $fixturesDir = __DIR__ . '/../../fixtures';
+        $xsd = $fixturesDir . '/test.xsd';
+
+        if (!is_dir($fixturesDir)) {
+            mkdir($fixturesDir, 0755, true);
+        }
+
         // Criar um arquivo XSD temporário para teste
         $xsdContent = '<?xml version="1.0" encoding="UTF-8"?>
         <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
@@ -23,7 +28,7 @@ class ValidationHelperTest extends TestCase
                 </xs:complexType>
             </xs:element>
         </xs:schema>';
-        
+
         file_put_contents($xsd, $xsdContent);
         
         try {

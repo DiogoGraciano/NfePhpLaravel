@@ -5,8 +5,9 @@ namespace DiogoGraciano\Nfephp;
 use DiogoGraciano\Nfephp\Helpers\StringHelper;
 use DiogoGraciano\Nfephp\Helpers\UfHelper;
 use DiogoGraciano\Nfephp\Helpers\ValidationHelper;
+use DiogoGraciano\Nfephp\Managers\NfephpManager;
 
-class Nfephp extends NfephpCore
+class Nfephp extends NfephpManager
 {
     // ============================================
     // MÉTODOS DE CONVENIÊNCIA PARA CONTINGÊNCIAS

@@ -3,9 +3,8 @@
 namespace DiogoGraciano\Nfephp\Tests;
 
 use DiogoGraciano\Nfephp\NfephpServiceProvider;
-use Orchestra\Testbench\TestCase as OrchestraTestCase;
 
-abstract class TestCase extends OrchestraTestCase
+abstract class TestCase extends \Orchestra\Testbench\TestCase
 {
     /**
      * Setup the test environment.
@@ -59,7 +58,7 @@ abstract class TestCase extends OrchestraTestCase
     protected function getPackageAliases($app): array
     {
         return [
-            'Nfephp' => \DiogoGraciano\Nfephp\NfephpFacade::class,
+            'Nfephp' => \DiogoGraciano\Nfephp\Facades\Nfephp::class,
         ];
     }
 }

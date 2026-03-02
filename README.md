@@ -62,52 +62,54 @@ NFEPHP_CSC_ID="seu_csc_id"
 
 ## 📖 Uso
 
-### Uso básico
+O pacote registra a facade `Nfephp` automaticamente. Use-a nos controllers, commands e onde precisar:
 
 ```php
-use DiogoGraciano\Nfephp\Nfephp;
-
-$nfephp = new Nfephp();
+use Nfephp;
 
 // Verificar se o certificado está válido
-if ($nfephp->isCertificateValid()) {
+if (Nfephp::isCertificateValid()) {
     echo "Certificado válido!";
 }
 
 // Obter informações do certificado
-$certInfo = $nfephp->getCertificateInfo();
+$certInfo = Nfephp::getCertificateInfo();
 ```
 
 ### Gerenciamento de contingências
 
 ```php
+use Nfephp;
+
 // Ativar contingência
-$contingencyJson = $nfephp->activateContingency('SP', 'SEFAZ fora do ar', 'SVCAN');
+$contingencyJson = Nfephp::activateContingency('SP', 'SEFAZ fora do ar', 'SVCAN');
 
 // Verificar se está em contingência
-if ($nfephp->isInContingency()) {
+if (Nfephp::isInContingency()) {
     echo "Sistema em modo de contingência";
 }
 
 // Desativar contingência
-$nfephp->deactivateContingency();
+Nfephp::deactivateContingency();
 ```
 
 ### Validações
 
 ```php
+use Nfephp;
+
 // Validar CNPJ
-if ($nfephp->validateCnpj('12345678000195')) {
+if (Nfephp::validateCnpj('12345678000195')) {
     echo "CNPJ válido";
 }
 
 // Validar CPF
-if ($nfephp->validateCpf('12345678901')) {
+if (Nfephp::validateCpf('12345678901')) {
     echo "CPF válido";
 }
 
 // Validar chave de acesso da NFe
-if ($nfephp->validateNFeKey('12345678901234567890123456789012345678901234')) {
+if (Nfephp::validateNFeKey('12345678901234567890123456789012345678901234')) {
     echo "Chave de acesso válida";
 }
 ```
@@ -115,41 +117,48 @@ if ($nfephp->validateNFeKey('12345678901234567890123456789012345678901234')) {
 ### Formatação de dados
 
 ```php
+use Nfephp;
+
 // Formatar CNPJ
-$cnpjFormatado = $nfephp->formatCnpj('12345678000195');
+$cnpjFormatado = Nfephp::formatCnpj('12345678000195');
 // Resultado: 12.345.678/0001-95
 
 // Formatar CPF
-$cpfFormatado = $nfephp->formatCpf('12345678901');
+$cpfFormatado = Nfephp::formatCpf('12345678901');
 // Resultado: 123.456.789-01
 
 // Limpar string
-$stringLimpa = $nfephp->cleanString('Texto com caracteres especiais!@#');
+$stringLimpa = Nfephp::cleanString('Texto com caracteres especiais!@#');
 ```
 
 ### Helpers de UF
 
 ```php
-// Obter código da UF
-$codigoUf = $nfephp->getUfCode('SP'); // Retorna: 35
-
-// Obter UF pelo código
-$uf = $nfephp->getUfByCode(35); // Retorna: SP
-
-// Obter timezone da UF
-$timezone = $nfephp->getTimezoneByUf('SP'); // Retorna: America/Sao_Paulo
-
-// Gerar chave de acesso da NFe
-$chave = $nfephp->generateNFeKey('35', '2401', '12345678000195', '55', '1', '1', '1', '12345678');
-```
-
-### Uso com Facade
-
-```php
 use Nfephp;
 
-// Usar a facade
-if (Nfephp::isCertificateValid()) {
+// Obter código da UF
+$codigoUf = Nfephp::getUfCode('SP'); // Retorna: 35
+
+// Obter UF pelo código
+$uf = Nfephp::getUfByCode(35); // Retorna: SP
+
+// Obter timezone da UF
+$timezone = Nfephp::getTimezoneByUf('SP'); // Retorna: America/Sao_Paulo
+
+// Gerar chave de acesso da NFe
+$chave = Nfephp::generateNFeKey('35', '2401', '12345678000195', '55', '1', '1', '1', '12345678');
+```
+
+### Uso sem Facade (injeção de dependência)
+
+Se preferir injetar a instância ou usar em classes sem facade:
+
+```php
+use DiogoGraciano\Nfephp\Nfephp;
+
+$nfephp = app('nfephp'); // ou new Nfephp()
+
+if ($nfephp->isCertificateValid()) {
     echo "Certificado válido!";
 }
 ```
@@ -178,11 +187,12 @@ src/
 │   └── ValidationHelper.php  # Helpers para validações
 ├── Managers/
 │   ├── CertificateManager.php # Gerenciamento de certificados
-│   └── ContingencyManager.php # Gerenciamento de contingências
-├── Nfephp.php               # Classe principal
-├── NfephpCore.php           # Classe base
-├── NfephpFacade.php         # Facade do Laravel
-└── NfephpServiceProvider.php # Service Provider
+│   ├── ContingencyManager.php  # Gerenciamento de contingências
+│   └── NfephpManager.php      # Classe base (manager NFe/NFCe)
+├── Facades/
+│   └── Nfephp.php            # Facade do Laravel
+├── Nfephp.php                # Classe principal
+└── NfephpServiceProvider.php  # Service Provider
 ```
 
 ## 🐛 Troubleshooting

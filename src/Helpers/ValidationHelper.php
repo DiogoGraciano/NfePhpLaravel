@@ -43,7 +43,7 @@ class ValidationHelper
      */
     public static function validateCnpj(string $cnpj): bool
     {
-        $cnpj = preg_replace('/\D/', '', $cnpj);
+        $cnpj = (string) preg_replace('/\D/', '', $cnpj);
 
         if (strlen($cnpj) !== 14) {
             return false;
@@ -89,7 +89,7 @@ class ValidationHelper
      */
     public static function validateCpf(string $cpf): bool
     {
-        $cpf = preg_replace('/\D/', '', $cpf);
+        $cpf = (string) preg_replace('/\D/', '', $cpf);
 
         if (strlen($cpf) !== 11) {
             return false;
@@ -131,7 +131,7 @@ class ValidationHelper
      */
     public static function validateCep(string $cep): bool
     {
-        $cep = preg_replace('/\D/', '', $cep);
+        $cep = (string) preg_replace('/\D/', '', $cep);
 
         return strlen($cep) === 8;
     }
@@ -155,7 +155,7 @@ class ValidationHelper
      */
     public static function validatePhone(string $phone): bool
     {
-        $phone = preg_replace('/\D/', '', $phone);
+        $phone = (string) preg_replace('/\D/', '', $phone);
 
         return strlen($phone) >= 10 && strlen($phone) <= 11;
     }
