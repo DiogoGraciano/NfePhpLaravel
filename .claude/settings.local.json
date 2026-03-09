@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(vendor/bin/phpunit tests/Unit/Managers/NfephpManagerMakeTest.php)",
+      "Bash(vendor/bin/phpunit tests/Unit/Managers/NfephpManagerMakeTest.php --no-coverage)",
+      "Bash(vendor/bin/phpunit --no-coverage)"
+    ]
+  }
+}

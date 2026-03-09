@@ -14,11 +14,6 @@ use NFePHP\NFe\Tools;
 abstract class NfephpManager
 {
     /**
-     * Instância do Make para criação de NFe
-     */
-    protected ?Make $make = null;
-
-    /**
      * Instância do Tools para comunicação com SEFAZ
      */
     protected ?Tools $tools = null;
@@ -59,9 +54,6 @@ abstract class NfephpManager
     protected function initializeNFePHP(): void
     {
         try {
-            // Inicializa o Make
-            $this->make = new Make();
-
             // Se temos certificado configurado, inicializa o Tools
             if (
                 ! empty($this->config['certificate']['path'])
@@ -99,19 +91,19 @@ abstract class NfephpManager
     }
 
     /**
-     * Cria uma instância de NFe
+     * Cria uma nova instância de NFe (Make)
      */
-    public function createNFe(): ?Make
+    public function createNFe(): Make
     {
-        return $this->make;
+        return new Make();
     }
 
     /**
-     * Cria uma instância de NFCe
+     * Cria uma nova instância de NFCe (Make)
      */
-    public function createNFCe(): ?Make
+    public function createNFCe(): Make
     {
-        return $this->make;
+        return new Make();
     }
 
     /**
