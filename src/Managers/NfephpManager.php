@@ -36,6 +36,11 @@ abstract class NfephpManager
     protected CertificateManager $certificateManager;
 
     /**
+     * Gerenciador de DANFE (PDF)
+     */
+    protected DanfeManager $danfeManager;
+
+    /**
      * Construtor da classe
      */
     public function __construct()
@@ -43,6 +48,7 @@ abstract class NfephpManager
         $this->config = config('nfephp', []);
         $this->contingencyManager = new ContingencyManager();
         $this->certificateManager = new CertificateManager();
+        $this->danfeManager = new DanfeManager($this->config['danfe']['logo_path'] ?? null);
         $this->initializeNFePHP();
     }
 
@@ -352,5 +358,13 @@ abstract class NfephpManager
     public function getCertificateManager(): CertificateManager
     {
         return $this->certificateManager;
+    }
+
+    /**
+     * Obtém o gerenciador de DANFE
+     */
+    public function getDanfeManager(): DanfeManager
+    {
+        return $this->danfeManager;
     }
 }

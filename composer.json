@@ -19,6 +19,7 @@
     "require": {
         "php": "^8.2",
         "illuminate/support": "^12.0",
+        "nfephp-org/sped-da": "^1.0",
         "nfephp-org/sped-nfe": "^5.1"
     },
     "require-dev": {

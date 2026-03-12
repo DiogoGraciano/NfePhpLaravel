@@ -23,6 +23,13 @@ return [
     ],
 
     /*
+     * Configurações do DANFE (PDF)
+     */
+    'danfe' => [
+        'logo_path' => env('NFEPHP_DANFE_LOGO_PATH', null),
+    ],
+
+    /*
      * Configuração principal do NFePHP (formato esperado pela biblioteca)
      * 
      * Esta é a configuração que será passada diretamente para o Tools do NFePHP

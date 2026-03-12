@@ -3,7 +3,14 @@
     "allow": [
       "Bash(vendor/bin/phpunit tests/Unit/Managers/NfephpManagerMakeTest.php)",
       "Bash(vendor/bin/phpunit tests/Unit/Managers/NfephpManagerMakeTest.php --no-coverage)",
-      "Bash(vendor/bin/phpunit --no-coverage)"
+      "Bash(vendor/bin/phpunit --no-coverage)",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "Bash(composer require:*)",
+      "Bash(php /usr/local/bin/composer --version)",
+      "Read(//usr/**)",
+      "Bash(curl -sL https://raw.githubusercontent.com/nfephp-org/sped-da/master/tests/fixtures/xml/nfe.xml -o /tmp/nfe_fixture.xml)",
+      "Read(//tmp/**)"
     ]
   }
 }

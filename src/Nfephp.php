@@ -273,6 +273,232 @@ class Nfephp extends NfephpManager
         return UfHelper::getTimezone($uf);
     }
 
+    // ============================================
+    // MÉTODOS DE CONVENIÊNCIA PARA DANFE (PDF)
+    // ============================================
+
+    /**
+     * Gera PDF do DANFE a partir do XML da NFe
+     *
+     * @param string $xml XML autorizado da NFe
+     * @return string Conteúdo binário do PDF
+     * @throws \Exception
+     */
+    public function generateDanfe(string $xml): string
+    {
+        return $this->danfeManager->generateDanfe($xml);
+    }
+
+    /**
+     * Gera PDF do DANFE e salva usando Storage do Laravel
+     *
+     * @param string $xml XML autorizado da NFe
+     * @param string $filePath Caminho relativo ao disco
+     * @param string $disk Disco do Storage (default: disco padrão)
+     * @throws \Exception
+     */
+    public function saveDanfe(string $xml, string $filePath, string $disk = ''): void
+    {
+        $this->danfeManager->saveDanfe($xml, $filePath, $disk);
+    }
+
+    /**
+     * Retorna Response HTTP com o PDF do DANFE para download
+     *
+     * @param string $xml XML autorizado da NFe
+     * @param string $filename Nome do arquivo para download
+     * @return \Illuminate\Http\Response
+     * @throws \Exception
+     */
+    public function downloadDanfe(string $xml, string $filename = 'danfe.pdf'): \Illuminate\Http\Response
+    {
+        return $this->danfeManager->downloadDanfe($xml, $filename);
+    }
+
+    /**
+     * Retorna Response HTTP com o PDF do DANFE para visualização inline
+     *
+     * @param string $xml XML autorizado da NFe
+     * @param string $filename Nome do arquivo
+     * @return \Illuminate\Http\Response
+     * @throws \Exception
+     */
+    public function renderDanfe(string $xml, string $filename = 'danfe.pdf'): \Illuminate\Http\Response
+    {
+        return $this->danfeManager->renderDanfe($xml, $filename);
+    }
+
+    /**
+     * Gera PDF do DANFE para NFCe
+     *
+     * @param string $xml XML autorizado da NFCe
+     * @return string Conteúdo binário do PDF
+     * @throws \Exception
+     */
+    public function generateDanfce(string $xml): string
+    {
+        return $this->danfeManager->generateDanfce($xml);
+    }
+
+    /**
+     * Gera PDF do DANFE para NFCe e salva usando Storage do Laravel
+     *
+     * @param string $xml XML autorizado da NFCe
+     * @param string $filePath Caminho relativo ao disco
+     * @param string $disk Disco do Storage (default: disco padrão)
+     * @throws \Exception
+     */
+    public function saveDanfce(string $xml, string $filePath, string $disk = ''): void
+    {
+        $this->danfeManager->saveDanfce($xml, $filePath, $disk);
+    }
+
+    /**
+     * Retorna Response HTTP com o PDF da DANFCe para download
+     *
+     * @param string $xml XML autorizado da NFCe
+     * @param string $filename Nome do arquivo para download
+     * @return \Illuminate\Http\Response
+     * @throws \Exception
+     */
+    public function downloadDanfce(string $xml, string $filename = 'danfce.pdf'): \Illuminate\Http\Response
+    {
+        return $this->danfeManager->downloadDanfce($xml, $filename);
+    }
+
+    /**
+     * Retorna Response HTTP com o PDF da DANFCe para visualização inline
+     *
+     * @param string $xml XML autorizado da NFCe
+     * @param string $filename Nome do arquivo
+     * @return \Illuminate\Http\Response
+     * @throws \Exception
+     */
+    public function renderDanfce(string $xml, string $filename = 'danfce.pdf'): \Illuminate\Http\Response
+    {
+        return $this->danfeManager->renderDanfce($xml, $filename);
+    }
+
+    /**
+     * Gera PDF do DANFE simplificado
+     *
+     * @param string $xml XML autorizado da NFe
+     * @return string Conteúdo binário do PDF
+     * @throws \Exception
+     */
+    public function generateDanfeSimples(string $xml): string
+    {
+        return $this->danfeManager->generateDanfeSimples($xml);
+    }
+
+    /**
+     * Gera PDF do DANFE simplificado e salva usando Storage do Laravel
+     *
+     * @param string $xml XML autorizado da NFe
+     * @param string $filePath Caminho relativo ao disco
+     * @param string $disk Disco do Storage (default: disco padrão)
+     * @throws \Exception
+     */
+    public function saveDanfeSimples(string $xml, string $filePath, string $disk = ''): void
+    {
+        $this->danfeManager->saveDanfeSimples($xml, $filePath, $disk);
+    }
+
+    /**
+     * Retorna Response HTTP com o PDF do DANFE simplificado para download
+     *
+     * @param string $xml XML autorizado da NFe
+     * @param string $filename Nome do arquivo para download
+     * @return \Illuminate\Http\Response
+     * @throws \Exception
+     */
+    public function downloadDanfeSimples(string $xml, string $filename = 'danfe_simples.pdf'): \Illuminate\Http\Response
+    {
+        return $this->danfeManager->downloadDanfeSimples($xml, $filename);
+    }
+
+    /**
+     * Retorna Response HTTP com o PDF do DANFE simplificado para visualização inline
+     *
+     * @param string $xml XML autorizado da NFe
+     * @param string $filename Nome do arquivo
+     * @return \Illuminate\Http\Response
+     * @throws \Exception
+     */
+    public function renderDanfeSimples(string $xml, string $filename = 'danfe_simples.pdf'): \Illuminate\Http\Response
+    {
+        return $this->danfeManager->renderDanfeSimples($xml, $filename);
+    }
+
+    /**
+     * Gera PDF do documento de evento (cancelamento, CCe, etc.)
+     *
+     * @param string $xml XML do evento
+     * @param array<string, string> $dadosEmitente Dados do emitente (razao, logradouro, numero, complemento, bairro, CEP, municipio, UF, telefone, email)
+     * @return string Conteúdo binário do PDF
+     * @throws \Exception
+     */
+    public function generateDaevento(string $xml, array $dadosEmitente = []): string
+    {
+        return $this->danfeManager->generateDaevento($xml, $dadosEmitente);
+    }
+
+    /**
+     * Gera PDF do documento de evento e salva usando Storage do Laravel
+     *
+     * @param string $xml XML do evento
+     * @param string $filePath Caminho relativo ao disco
+     * @param array<string, string> $dadosEmitente Dados do emitente
+     * @param string $disk Disco do Storage (default: disco padrão)
+     * @throws \Exception
+     */
+    public function saveDaevento(string $xml, string $filePath, array $dadosEmitente = [], string $disk = ''): void
+    {
+        $this->danfeManager->saveDaevento($xml, $filePath, $dadosEmitente, $disk);
+    }
+
+    /**
+     * Retorna Response HTTP com o PDF do evento para download
+     *
+     * @param string $xml XML do evento
+     * @param array<string, string> $dadosEmitente Dados do emitente
+     * @param string $filename Nome do arquivo para download
+     * @return \Illuminate\Http\Response
+     * @throws \Exception
+     */
+    public function downloadDaevento(string $xml, array $dadosEmitente = [], string $filename = 'evento.pdf'): \Illuminate\Http\Response
+    {
+        return $this->danfeManager->downloadDaevento($xml, $dadosEmitente, $filename);
+    }
+
+    /**
+     * Retorna Response HTTP com o PDF do evento para visualização inline
+     *
+     * @param string $xml XML do evento
+     * @param array<string, string> $dadosEmitente Dados do emitente
+     * @param string $filename Nome do arquivo
+     * @return \Illuminate\Http\Response
+     * @throws \Exception
+     */
+    public function renderDaevento(string $xml, array $dadosEmitente = [], string $filename = 'evento.pdf'): \Illuminate\Http\Response
+    {
+        return $this->danfeManager->renderDaevento($xml, $dadosEmitente, $filename);
+    }
+
+    /**
+     * Define o logo do DANFE
+     *
+     * @param string|null $logoPath Caminho para o arquivo de logo
+     */
+    public function setDanfeLogo(?string $logoPath): void
+    {
+        $this->danfeManager->setLogo($logoPath);
+    }
+
+    // ============================================
+    // MÉTODOS DE CONVENIÊNCIA PARA UF
+    // ============================================
+
     /**
      * Gera chave de acesso da NFe
      *

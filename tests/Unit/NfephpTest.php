@@ -2,6 +2,7 @@
 
 namespace DiogoGraciano\Nfephp\Tests\Unit;
 
+use DiogoGraciano\Nfephp\Managers\DanfeManager;
 use DiogoGraciano\Nfephp\Managers\NfephpManager;
 use DiogoGraciano\Nfephp\Nfephp;
 use DiogoGraciano\Nfephp\Tests\TestCase;
@@ -526,6 +527,193 @@ class NfephpTest extends TestCase
         $result = $nfephp->getTimezoneByUf('SP');
         
         $this->assertIsString($result);
+    }
+
+    private function getNfeXml(): string
+    {
+        return file_get_contents(__DIR__ . '/../fixtures/nfe.xml');
+    }
+
+    public function testGetDanfeManager(): void
+    {
+        $core = new Nfephp();
+
+        $result = $core->getDanfeManager();
+
+        $this->assertInstanceOf(DanfeManager::class, $result);
+    }
+
+    // --- Sucesso: generate ---
+
+    public function testGenerateDanfeWithValidXml(): void
+    {
+        $core = new Nfephp();
+        $pdf = $core->generateDanfe($this->getNfeXml());
+
+        $this->assertNotEmpty($pdf);
+        $this->assertStringStartsWith('%PDF', $pdf);
+    }
+
+    public function testGenerateDanfeSimplesWithValidXml(): void
+    {
+        $core = new Nfephp();
+        $pdf = $core->generateDanfeSimples($this->getNfeXml());
+
+        $this->assertNotEmpty($pdf);
+        $this->assertStringStartsWith('%PDF', $pdf);
+    }
+
+    // --- Sucesso: save (Storage) ---
+
+    public function testSaveDanfeWithValidXml(): void
+    {
+        \Illuminate\Support\Facades\Storage::fake('local');
+
+        $core = new Nfephp();
+        $core->saveDanfe($this->getNfeXml(), 'danfes/test.pdf', 'local');
+
+        \Illuminate\Support\Facades\Storage::disk('local')->assertExists('danfes/test.pdf');
+    }
+
+    // --- Sucesso: download ---
+
+    public function testDownloadDanfeWithValidXml(): void
+    {
+        $core = new Nfephp();
+        $response = $core->downloadDanfe($this->getNfeXml(), 'nota.pdf');
+
+        $this->assertInstanceOf(\Illuminate\Http\Response::class, $response);
+        $this->assertEquals(200, $response->getStatusCode());
+        $this->assertEquals('application/pdf', $response->headers->get('Content-Type'));
+        $this->assertStringContainsString('attachment', $response->headers->get('Content-Disposition'));
+    }
+
+    // --- Sucesso: render inline ---
+
+    public function testRenderDanfeWithValidXml(): void
+    {
+        $core = new Nfephp();
+        $response = $core->renderDanfe($this->getNfeXml(), 'nota.pdf');
+
+        $this->assertInstanceOf(\Illuminate\Http\Response::class, $response);
+        $this->assertEquals(200, $response->getStatusCode());
+        $this->assertStringContainsString('inline', $response->headers->get('Content-Disposition'));
+    }
+
+    // --- Erro: XML inválido ---
+
+    public function testGenerateDanfeWithInvalidXml(): void
+    {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('Erro ao gerar DANFE:');
+
+        $core = new Nfephp();
+        $core->generateDanfe('invalid xml');
+    }
+
+    public function testSaveDanfeWithInvalidXml(): void
+    {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('Erro ao gerar DANFE:');
+
+        \Illuminate\Support\Facades\Storage::fake('local');
+
+        $core = new Nfephp();
+        $core->saveDanfe('invalid xml', 'test.pdf', 'local');
+    }
+
+    public function testDownloadDanfeWithInvalidXml(): void
+    {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('Erro ao gerar DANFE:');
+
+        $core = new Nfephp();
+        $core->downloadDanfe('invalid xml');
+    }
+
+    public function testRenderDanfeWithInvalidXml(): void
+    {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('Erro ao gerar DANFE:');
+
+        $core = new Nfephp();
+        $core->renderDanfe('invalid xml');
+    }
+
+    public function testGenerateDanfceWithInvalidXml(): void
+    {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('Erro ao gerar DANFCe:');
+
+        $core = new Nfephp();
+        $core->generateDanfce('invalid xml');
+    }
+
+    public function testSaveDanfceWithInvalidXml(): void
+    {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('Erro ao gerar DANFCe:');
+
+        \Illuminate\Support\Facades\Storage::fake('local');
+
+        $core = new Nfephp();
+        $core->saveDanfce('invalid xml', 'test.pdf', 'local');
+    }
+
+    public function testGenerateDanfeSimplesWithInvalidXml(): void
+    {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('Erro ao gerar DANFE simplificado:');
+
+        $core = new Nfephp();
+        $core->generateDanfeSimples('invalid xml');
+    }
+
+    public function testSaveDanfeSimplesWithInvalidXml(): void
+    {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('Erro ao gerar DANFE simplificado:');
+
+        \Illuminate\Support\Facades\Storage::fake('local');
+
+        $core = new Nfephp();
+        $core->saveDanfeSimples('invalid xml', 'test.pdf', 'local');
+    }
+
+    public function testGenerateDaeventoWithInvalidXml(): void
+    {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('Erro ao gerar documento de evento:');
+
+        $core = new Nfephp();
+        $core->generateDaevento('invalid xml');
+    }
+
+    public function testSaveDaeventoWithInvalidXml(): void
+    {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('Erro ao gerar documento de evento:');
+
+        \Illuminate\Support\Facades\Storage::fake('local');
+
+        $core = new Nfephp();
+        $core->saveDaevento('invalid xml', 'test.pdf');
+    }
+
+    public function testSetDanfeLogo(): void
+    {
+        $core = new Nfephp();
+        $core->setDanfeLogo('/path/to/logo.png');
+
+        $this->assertInstanceOf(Nfephp::class, $core);
+    }
+
+    public function testSetDanfeLogoNull(): void
+    {
+        $core = new Nfephp();
+        $core->setDanfeLogo(null);
+
+        $this->assertInstanceOf(Nfephp::class, $core);
     }
 
     public function testGenerateNFeKey(): void
