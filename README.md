@@ -8,6 +8,7 @@ Um pacote Laravel elegante e prático para integração com o NFePHP, facilitand
 ## ✨ Características
 
 - 🚀 **Integração simplificada** com o NFePHP
+- 📄 **Geração de DANFE** (PDF) para NFe, NFCe, DANFE simplificado e eventos
 - 🔧 **Gerenciamento de contingências** automático e manual
 - 📋 **Validações robustas** para CNPJ, CPF e chaves de acesso
 - 🛠️ **Helpers utilitários** para formatação e manipulação de dados
@@ -21,6 +22,7 @@ Um pacote Laravel elegante e prático para integração com o NFePHP, facilitand
 - PHP 8.2 ou superior
 - Laravel 12.0 ou superior
 - NFePHP 5.1 ou superior
+- SPED-DA 1.0 ou superior (geração de DANFE)
 
 ## 🚀 Instalação
 
@@ -53,6 +55,9 @@ NFEPHP_VERSAO="4.00"
 # Certificado digital
 NFEPHP_CERTIFICATE_PATH="/path/to/your/certificate.pfx"
 NFEPHP_CERTIFICATE_PASSWORD="sua_senha"
+
+# DANFE (logo opcional)
+NFEPHP_DANFE_LOGO_PATH="/path/to/logo.png"
 
 # Configurações opcionais
 NFEPHP_TOKEN_IBPT="seu_token_ibpt"
@@ -149,6 +154,83 @@ $timezone = Nfephp::getTimezoneByUf('SP'); // Retorna: America/Sao_Paulo
 $chave = Nfephp::generateNFeKey('35', '2401', '12345678000195', '55', '1', '1', '1', '12345678');
 ```
 
+### Geração de DANFE (PDF)
+
+```php
+use Nfephp;
+
+$xmlAutorizado = '...'; // XML autorizado da NFe
+
+// Gerar PDF do DANFE (retorna string binária do PDF)
+$pdf = Nfephp::generateDanfe($xmlAutorizado);
+
+// Salvar DANFE no Storage do Laravel
+Nfephp::saveDanfe($xmlAutorizado, 'danfes/nota-001.pdf'); // disco padrão
+Nfephp::saveDanfe($xmlAutorizado, 'danfes/nota-001.pdf', 's3'); // disco específico
+
+// Retornar como download HTTP (em controllers)
+return Nfephp::downloadDanfe($xmlAutorizado, 'nota-001.pdf');
+
+// Retornar para visualização inline no navegador
+return Nfephp::renderDanfe($xmlAutorizado, 'nota-001.pdf');
+```
+
+#### DANFE para NFCe
+
+```php
+$xmlNfce = '...'; // XML autorizado da NFCe
+
+$pdf = Nfephp::generateDanfce($xmlNfce);
+Nfephp::saveDanfce($xmlNfce, 'danfces/cupom-001.pdf');
+return Nfephp::downloadDanfce($xmlNfce, 'cupom-001.pdf');
+return Nfephp::renderDanfce($xmlNfce, 'cupom-001.pdf');
+```
+
+#### DANFE Simplificado
+
+```php
+$pdf = Nfephp::generateDanfeSimples($xmlAutorizado);
+Nfephp::saveDanfeSimples($xmlAutorizado, 'danfes/simples-001.pdf');
+return Nfephp::downloadDanfeSimples($xmlAutorizado, 'simples-001.pdf');
+return Nfephp::renderDanfeSimples($xmlAutorizado, 'simples-001.pdf');
+```
+
+#### Documento de Evento (Cancelamento, CCe, etc.)
+
+```php
+$xmlEvento = '...'; // XML do evento
+
+// Dados do emitente (para o cabeçalho do documento)
+$dadosEmitente = [
+    'razao' => 'Empresa Teste LTDA',
+    'logradouro' => 'Rua Exemplo',
+    'numero' => '123',
+    'complemento' => 'Sala 1',
+    'bairro' => 'Centro',
+    'CEP' => '01001000',
+    'municipio' => 'São Paulo',
+    'UF' => 'SP',
+    'telefone' => '1199999999',
+    'email' => 'contato@empresa.com',
+];
+
+$pdf = Nfephp::generateDaevento($xmlEvento, $dadosEmitente);
+Nfephp::saveDaevento($xmlEvento, 'eventos/cancelamento-001.pdf', $dadosEmitente);
+return Nfephp::downloadDaevento($xmlEvento, $dadosEmitente, 'cancelamento-001.pdf');
+return Nfephp::renderDaevento($xmlEvento, $dadosEmitente, 'cancelamento-001.pdf');
+```
+
+#### Definir Logo do DANFE
+
+```php
+// Via configuração (.env)
+// NFEPHP_DANFE_LOGO_PATH="/path/to/logo.png"
+
+// Ou em tempo de execução
+Nfephp::setDanfeLogo('/path/to/logo.png');
+Nfephp::setDanfeLogo(null); // remover logo
+```
+
 ### Uso sem Facade (injeção de dependência)
 
 Se preferir injetar a instância ou usar em classes sem facade:
@@ -182,13 +264,14 @@ composer test-coverage
 ```
 src/
 ├── Helpers/
-│   ├── StringHelper.php      # Helpers para manipulação de strings
-│   ├── UfHelper.php          # Helpers para códigos de UF
-│   └── ValidationHelper.php  # Helpers para validações
+│   ├── StringHelper.php       # Helpers para manipulação de strings
+│   ├── UfHelper.php           # Helpers para códigos de UF
+│   └── ValidationHelper.php   # Helpers para validações
 ├── Managers/
 │   ├── CertificateManager.php # Gerenciamento de certificados
-│   ├── ContingencyManager.php  # Gerenciamento de contingências
-│   └── NfephpManager.php      # Classe base (manager NFe/NFCe)
+│   ├── ContingencyManager.php # Gerenciamento de contingências
+│   ├── DanfeManager.php       # Geração de DANFE (PDF)
+│   └── NfephpManager.php     # Classe base (manager NFe/NFCe)
 ├── Facades/
 │   └── Nfephp.php            # Facade do Laravel
 ├── Nfephp.php                # Classe principal
@@ -217,6 +300,7 @@ src/
 ## 📚 Documentação Adicional
 
 - [NFePHP Oficial](https://github.com/nfephp-org/sped-nfe)
+- [SPED-DA (DANFE)](https://github.com/nfephp-org/sped-da)
 - [Documentação Laravel](https://laravel.com/docs)
 - [Especificações Técnicas da NFe](http://www.nfe.fazenda.gov.br/)
 
