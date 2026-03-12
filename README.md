@@ -1,7 +1,9 @@
 # NfePhp Laravel
 
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/diogo-graciano/nfephp.svg?style=flat-square)](https://packagist.org/packages/diogo-graciano/nfephp)
-[![Total Downloads](https://img.shields.io/packagist/dt/diogo-graciano/nfephp.svg?style=flat-square)](https://packagist.org/packages/diogo-graciano/nfephp)
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/diogo-graciano/nfephp-laravel.svg?style=flat-square)](https://packagist.org/packages/diogo-graciano/nfephp-laravel)
+[![Total Downloads](https://img.shields.io/packagist/dt/diogo-graciano/nfephp-laravel.svg?style=flat-square)](https://packagist.org/packages/diogo-graciano/nfephp-laravel)
+[![PHP Version](https://img.shields.io/packagist/php-v/diogo-graciano/nfephp-laravel.svg?style=flat-square)](https://packagist.org/packages/diogo-graciano/nfephp-laravel)
+[![License](https://img.shields.io/packagist/l/diogo-graciano/nfephp-laravel.svg?style=flat-square)](https://packagist.org/packages/diogo-graciano/nfephp-laravel)
 
 Um pacote Laravel elegante e prático para integração com o NFePHP, facilitando a emissão e gestão de Notas Fiscais Eletrônicas (NFe) e Notas Fiscais de Consumidor Eletrônicas (NFCe) em aplicações Laravel.
 
