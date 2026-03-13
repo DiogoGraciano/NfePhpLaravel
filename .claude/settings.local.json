@@ -10,7 +10,19 @@
       "Bash(php /usr/local/bin/composer --version)",
       "Read(//usr/**)",
       "Bash(curl -sL https://raw.githubusercontent.com/nfephp-org/sped-da/master/tests/fixtures/xml/nfe.xml -o /tmp/nfe_fixture.xml)",
-      "Read(//tmp/**)"
+      "Read(//tmp/**)",
+      "Bash(composer test:*)",
+      "Bash(php vendor/bin/phpunit)",
+      "Bash(php vendor/bin/phpunit --testdox)",
+      "Bash(php vendor/bin/phpunit tests/Unit/NfephpTest.php --no-coverage)",
+      "Bash(php -r \"echo PHP_VERSION;\")",
+      "Bash(vendor/bin/phpunit tests/Unit/NfseTest.php)",
+      "Bash(vendor/bin/phpunit tests/Unit/NfseTest.php --no-coverage)",
+      "Bash(./vendor/bin/phpunit)",
+      "Bash(./vendor/bin/phpunit --list-tests)",
+      "Bash(./vendor/bin/phpunit --no-coverage)",
+      "Bash(./vendor/bin/phpunit --no-coverage --display-deprecations)",
+      "Bash(./vendor/bin/phpunit tests/Unit/NfeContextTest.php --no-coverage)"
     ]
   }
 }

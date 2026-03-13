@@ -2,6 +2,10 @@
 
 namespace DiogoGraciano\Nfephp;
 
+use DiogoGraciano\Nfephp\Managers\CertificateManager;
+use DiogoGraciano\Nfephp\Managers\DanfeManager;
+use DiogoGraciano\Nfephp\Managers\NfeManager;
+use DiogoGraciano\Nfephp\Managers\UtilsManager;
 use Illuminate\Support\ServiceProvider;
 
 class NfephpServiceProvider extends ServiceProvider
@@ -11,36 +15,10 @@ class NfephpServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        /*
-         * Optional methods to load your package assets
-         */
-        // $this->loadTranslationsFrom(__DIR__.'/../resources/lang', 'nfephp');
-        // $this->loadViewsFrom(__DIR__.'/../resources/views', 'nfephp');
-        // $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
-        // $this->loadRoutesFrom(__DIR__.'/routes.php');
-
         if ($this->app->runningInConsole()) {
             $this->publishes([
                 __DIR__ . '/../config/config.php' => config_path('nfephp.php'),
             ], 'config');
-
-            // Publishing the views.
-            /*$this->publishes([
-                __DIR__.'/../resources/views' => resource_path('views/vendor/nfephp'),
-            ], 'views');*/
-
-            // Publishing assets.
-            /*$this->publishes([
-                __DIR__.'/../resources/assets' => public_path('vendor/nfephp'),
-            ], 'assets');*/
-
-            // Publishing the translation files.
-            /*$this->publishes([
-                __DIR__.'/../resources/lang' => resource_path('lang/vendor/nfephp'),
-            ], 'lang');*/
-
-            // Registering package commands.
-            // $this->commands([]);
         }
     }
 
@@ -49,12 +27,27 @@ class NfephpServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        // Automatically apply the package configuration
         $this->mergeConfigFrom(__DIR__ . '/../config/config.php', 'nfephp');
 
-        // Register the main class to use with the facade
-        $this->app->singleton('nfephp', function ($app) {
-            return new Nfephp();
-        });
+        // Contexto compartilhado (config, certificate, tools, contingency)
+        $this->app->singleton(NfeContext::class, fn ($app) => new NfeContext());
+
+        // NFe - operacoes com SEFAZ
+        $this->app->singleton('nfe', fn ($app) => new NfeManager($app->make(NfeContext::class)));
+
+        // DANFE - geracao de PDF
+        $this->app->singleton('danfe', fn ($app) => new DanfeManager(config('nfephp.danfe.logo_path')));
+
+        // Contingencia
+        $this->app->singleton('contingency', fn ($app) => $app->make(NfeContext::class)->getContingencyManager());
+
+        // Certificado digital
+        $this->app->singleton('certificate', fn ($app) => $app->make(NfeContext::class)->getCertificateManager());
+
+        // Utilitarios (validacao, formatacao, UF)
+        $this->app->singleton('nfe-utils', fn ($app) => new UtilsManager());
+
+        // NFSe
+        $this->app->singleton('nfse', fn ($app) => new Nfse());
     }
 }

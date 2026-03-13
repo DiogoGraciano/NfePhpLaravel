@@ -14,6 +14,23 @@ class ContingencyManager
     protected ?Contingency $contingency = null;
 
     /**
+     * Callback chamado após mudança de estado da contingência
+     *
+     * @var \Closure|null
+     */
+    protected ?\Closure $onStateChange = null;
+
+    /**
+     * Construtor
+     *
+     * @param \Closure|null $onStateChange Callback chamado após ativar/desativar/carregar contingência
+     */
+    public function __construct(?\Closure $onStateChange = null)
+    {
+        $this->onStateChange = $onStateChange;
+    }
+
+    /**
      * Ativa modo de contingência
      *
      * @param string $acronym Sigla do estado (ex: SP, RJ, MG)
@@ -27,6 +44,10 @@ class ContingencyManager
         try {
             $this->contingency = new Contingency();
             $result = $this->contingency->activate($acronym, $motive, $type);
+
+            if ($this->onStateChange) {
+                ($this->onStateChange)();
+            }
 
             return $result;
         } catch (Exception $e) {
@@ -46,6 +67,10 @@ class ContingencyManager
         } else {
             $this->contingency = new Contingency();
             $result = $this->contingency->deactivate();
+        }
+
+        if ($this->onStateChange) {
+            ($this->onStateChange)();
         }
 
         return $result;
@@ -109,6 +134,10 @@ class ContingencyManager
         try {
             $this->contingency = new Contingency();
             $this->contingency->load($contingencyJson);
+
+            if ($this->onStateChange) {
+                ($this->onStateChange)();
+            }
         } catch (Exception $e) {
             throw new Exception("Erro ao carregar contingência: " . $e->getMessage());
         }

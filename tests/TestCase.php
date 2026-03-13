@@ -12,13 +12,16 @@ abstract class TestCase extends \Orchestra\Testbench\TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        
+
         // Configurações padrão para os testes
         config([
             'nfephp' => [
                 'certificate' => [
                     'path' => '',
                     'password' => '',
+                ],
+                'danfe' => [
+                    'logo_path' => null,
                 ],
                 'nfe_config' => [
                     'atualizacao' => '2024-01-01 00:00:00',
@@ -31,6 +34,9 @@ abstract class TestCase extends \Orchestra\Testbench\TestCase
                     'tokenIBPT' => '',
                     'CSC' => '',
                     'CSCid' => '',
+                ],
+                'nfse_config' => [
+                    'tpAmb' => 2,
                 ],
             ],
         ]);
@@ -58,7 +64,12 @@ abstract class TestCase extends \Orchestra\Testbench\TestCase
     protected function getPackageAliases($app): array
     {
         return [
-            'Nfephp' => \DiogoGraciano\Nfephp\Facades\Nfephp::class,
+            'Nfe' => \DiogoGraciano\Nfephp\Facades\Nfe::class,
+            'Danfe' => \DiogoGraciano\Nfephp\Facades\Danfe::class,
+            'Contingency' => \DiogoGraciano\Nfephp\Facades\Contingency::class,
+            'Certificate' => \DiogoGraciano\Nfephp\Facades\Certificate::class,
+            'Utils' => \DiogoGraciano\Nfephp\Facades\Utils::class,
+            'Nfse' => \DiogoGraciano\Nfephp\Facades\Nfse::class,
         ];
     }
 }

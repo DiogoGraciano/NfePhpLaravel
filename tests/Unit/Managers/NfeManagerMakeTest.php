@@ -2,11 +2,12 @@
 
 namespace DiogoGraciano\Nfephp\Tests\Unit\Managers;
 
-use DiogoGraciano\Nfephp\Nfephp;
+use DiogoGraciano\Nfephp\NfeContext;
+use DiogoGraciano\Nfephp\Managers\NfeManager;
 use DiogoGraciano\Nfephp\Tests\TestCase;
 use NFePHP\NFe\Make;
 
-class NfephpManagerMakeTest extends TestCase
+class NfeManagerMakeTest extends TestCase
 {
     /**
      * Replica o bug original: taginfNFe seguido de getXML não deve
@@ -14,7 +15,7 @@ class NfephpManagerMakeTest extends TestCase
      */
     public function testTaginfNFeFollowedByGetXMLDoesNotThrowUninitializedError(): void
     {
-        $core = new Nfephp();
+        $core = new NfeManager(new NfeContext());
         $make = $core->createNFe();
 
         $make->taginfNFe((object) ['versao' => '4.00', 'Id' => '', 'pk_nItem' => '']);
@@ -44,7 +45,7 @@ class NfephpManagerMakeTest extends TestCase
      */
     public function testSetConfigDoesNotAffectExistingMakeInstance(): void
     {
-        $core = new Nfephp();
+        $core = new NfeManager(new NfeContext());
         $make = $core->createNFe();
 
         $make->taginfNFe((object) ['versao' => '4.00', 'Id' => '', 'pk_nItem' => '']);
@@ -77,7 +78,7 @@ class NfephpManagerMakeTest extends TestCase
      */
     public function testCreateNFeReturnsIndependentInstances(): void
     {
-        $core = new Nfephp();
+        $core = new NfeManager(new NfeContext());
 
         $make1 = $core->createNFe();
         $make2 = $core->createNFe();
@@ -90,7 +91,7 @@ class NfephpManagerMakeTest extends TestCase
      */
     public function testCreateNFCeReturnsIndependentInstances(): void
     {
-        $core = new Nfephp();
+        $core = new NfeManager(new NfeContext());
 
         $make1 = $core->createNFCe();
         $make2 = $core->createNFCe();
@@ -106,7 +107,7 @@ class NfephpManagerMakeTest extends TestCase
     {
         $this->expectException(\Error::class);
 
-        $core = new Nfephp();
+        $core = new NfeManager(new NfeContext());
         $make = $core->createNFe();
 
         // Não chama taginfNFe — deve falhar
@@ -118,7 +119,7 @@ class NfephpManagerMakeTest extends TestCase
      */
     public function testMultipleNFeCreationInSequence(): void
     {
-        $core = new Nfephp();
+        $core = new NfeManager(new NfeContext());
 
         // Cria primeira NFe
         $make1 = $core->createNFe();
@@ -170,7 +171,7 @@ class NfephpManagerMakeTest extends TestCase
      */
     public function testSetConfigBetweenTwoNFeCreations(): void
     {
-        $core = new Nfephp();
+        $core = new NfeManager(new NfeContext());
 
         $make1 = $core->createNFe();
         $make1->taginfNFe((object) ['versao' => '4.00', 'Id' => '', 'pk_nItem' => '']);
@@ -193,9 +194,9 @@ class NfephpManagerMakeTest extends TestCase
      */
     public function testFullFlowWithSetConfigBeforeCreateNFe(): void
     {
-        $core = new Nfephp();
+        $core = new NfeManager(new NfeContext());
 
-        // Simula Nfephp::setConfig($tenant->toNfephpConfig())
+        // Simula NfeManager::setConfig($tenant->toNfephpConfig())
         $core->setConfig([
             'nfe_config' => [
                 'atualizacao' => '2024-01-01 00:00:00',
