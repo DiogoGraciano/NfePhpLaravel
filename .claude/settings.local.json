@@ -29,7 +29,8 @@
       "Bash(composer validate:*)",
       "Bash(composer update:*)",
       "Bash(git remote:*)",
-      "Bash(vendor/bin/phpunit)"
+      "Bash(vendor/bin/phpunit)",
+      "Bash(vendor/bin/phpunit tests/Unit/NfseTest.php --display-phpunit-notices)"
     ]
   }
 }

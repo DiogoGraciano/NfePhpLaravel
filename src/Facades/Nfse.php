@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Facade;
  *
  * @method static string createDps(\stdClass $std)
  * @method static string createDpsEvento(\stdClass $std)
- * @method static string sendDps(string $xml)
+ * @method static string|array sendDps(string $xml)
  * @method static string consultNfseByKey(string $chave, bool $encoding = true)
  * @method static string consultDpsByKey(string $chave)
  * @method static string consultNfseEvents(string $chave, ?int $tipoEvento = null, ?int $nSequencial = null)

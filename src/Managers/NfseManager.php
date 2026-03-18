@@ -141,10 +141,10 @@ class NfseManager
      * Envia DPS para a API NFSe Nacional
      *
      * @param string $xml XML do DPS
-     * @return string Resposta da API
+     * @return string|array Resposta da API (array quando a SEFAZ responde com JSON)
      * @throws Exception
      */
-    public function sendDps(string $xml): string
+    public function sendDps(string $xml): string|array
     {
         if (! $this->tools) {
             throw new Exception("NFSe Tools não inicializado. Verifique se o certificado está configurado.");

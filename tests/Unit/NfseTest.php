@@ -7,6 +7,8 @@ use DiogoGraciano\Nfephp\Managers\NfseManager;
 use DiogoGraciano\Nfephp\Nfse;
 use DiogoGraciano\Nfephp\Tests\TestCase;
 use Exception;
+use Hadder\NfseNacional\Tools as NfseTools;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class NfseTest extends TestCase
 {
@@ -121,5 +123,61 @@ class NfseTest extends TestCase
     {
         $config = $this->nfse->getNfseManager()->getConfig();
         $this->assertIsArray($config);
+    }
+
+    // ============================================
+    // TESTES DE RETORNO DO sendDps
+    // ============================================
+
+    /**
+     * @return array<string, array{0: string|array<string, mixed>}>
+     */
+    public static function sendDpsReturnProvider(): array
+    {
+        return [
+            'xml string response' => ['<nfse><id>123</id></nfse>'],
+            'json array response' => [['id' => '123', 'status' => 'processado', 'message' => 'NFSe emitida']],
+        ];
+    }
+
+    #[DataProvider('sendDpsReturnProvider')]
+    public function testSendDpsAcceptsStringAndArrayReturn(string|array $expectedReturn): void
+    {
+        $toolsStub = $this->createStub(NfseTools::class);
+        $toolsStub->method('enviaDps')->willReturn($expectedReturn);
+
+        $manager = new NfseManager();
+
+        $reflection = new \ReflectionClass($manager);
+        $toolsProperty = $reflection->getProperty('tools');
+        $toolsProperty->setValue($manager, $toolsStub);
+
+        $result = $manager->sendDps('<xml>test</xml>');
+
+        $this->assertEquals($expectedReturn, $result);
+    }
+
+    public function testSendDpsReturnTypeAllowsArray(): void
+    {
+        $reflection = new \ReflectionMethod(NfseManager::class, 'sendDps');
+        $returnType = $reflection->getReturnType();
+
+        $this->assertInstanceOf(\ReflectionUnionType::class, $returnType);
+
+        $typeNames = array_map(fn (\ReflectionNamedType $t) => $t->getName(), $returnType->getTypes());
+        $this->assertContains('string', $typeNames);
+        $this->assertContains('array', $typeNames);
+    }
+
+    public function testNfseWrapperSendDpsReturnTypeAllowsArray(): void
+    {
+        $reflection = new \ReflectionMethod(Nfse::class, 'sendDps');
+        $returnType = $reflection->getReturnType();
+
+        $this->assertInstanceOf(\ReflectionUnionType::class, $returnType);
+
+        $typeNames = array_map(fn (\ReflectionNamedType $t) => $t->getName(), $returnType->getTypes());
+        $this->assertContains('string', $typeNames);
+        $this->assertContains('array', $typeNames);
     }
 }

@@ -60,10 +60,10 @@ class Nfse
      * Envia DPS para a API NFSe Nacional
      *
      * @param string $xml XML do DPS
-     * @return string Resposta da API
+     * @return string|array Resposta da API (array quando a SEFAZ responde com JSON)
      * @throws \Exception
      */
-    public function sendDps(string $xml): string
+    public function sendDps(string $xml): string|array
     {
         return $this->nfseManager->sendDps($xml);
     }
