@@ -12,7 +12,7 @@ jobs:
         strategy:
             fail-fast: true
             matrix:
-                php: ['8.2', '8.3', '8.4']
+                php: ['8.3', '8.4']
                 laravel: ['12.*', '13.*']
                 include:
                     - laravel: '12.*'
@@ -35,7 +35,8 @@ jobs:
 
             - name: Install dependencies
               run: |
-                  composer require "laravel/framework:${{ matrix.laravel }}" "orchestra/testbench:${{ matrix.testbench }}" --no-interaction --no-update
+                  composer require "illuminate/support:${{ matrix.laravel }}" --no-interaction --no-update
+                  composer require "orchestra/testbench:${{ matrix.testbench }}" --dev --no-interaction --no-update
                   composer update --prefer-stable --prefer-dist --no-interaction
 
             - name: Execute tests

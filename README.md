@@ -23,7 +23,7 @@ Um pacote Laravel elegante e pratico para integracao com o NFePHP e NFSe Naciona
 
 ## Requisitos
 
-- PHP 8.2 ou superior
+- PHP 8.3 ou superior
 - Laravel 12.0 ou 13.0
 - NFePHP 5.1 ou superior
 - SPED-DA 1.0 ou superior (geracao de DANFE)
