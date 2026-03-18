@@ -46,8 +46,5 @@ class NfephpServiceProvider extends ServiceProvider
 
         // Utilitarios (validacao, formatacao, UF)
         $this->app->singleton('nfe-utils', fn ($app) => new UtilsManager());
-
-        // NFSe
-        $this->app->singleton('nfse', fn ($app) => new Nfse());
     }
 }

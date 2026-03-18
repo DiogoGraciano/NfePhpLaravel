@@ -35,9 +35,6 @@ abstract class TestCase extends \Orchestra\Testbench\TestCase
                     'CSC' => '',
                     'CSCid' => '',
                 ],
-                'nfse_config' => [
-                    'tpAmb' => 2,
-                ],
             ],
         ]);
     }
@@ -69,7 +66,6 @@ abstract class TestCase extends \Orchestra\Testbench\TestCase
             'Contingency' => \DiogoGraciano\Nfephp\Facades\Contingency::class,
             'Certificate' => \DiogoGraciano\Nfephp\Facades\Certificate::class,
             'Utils' => \DiogoGraciano\Nfephp\Facades\Utils::class,
-            'Nfse' => \DiogoGraciano\Nfephp\Facades\Nfse::class,
         ];
     }
 }

@@ -1,6 +1,6 @@
 {
     "name": "diogo-graciano/nfephp-laravel",
-    "description": "Um pacote Laravel elegante e prático para integração com o NFePHP, facilitando a emissão e gestão de Notas Fiscais Eletrônicas (NFe) e Notas Fiscais de Consumidor Eletrônicas (NFCe) em aplicações Laravel",
+    "description": "Um pacote Laravel elegante e pratico para integracao com o NFePHP, facilitando a emissao e gestao de Notas Fiscais Eletronicas (NFe) e Notas Fiscais de Consumidor Eletronicas (NFCe) em aplicacoes Laravel",
     "keywords": [
         "diogo-graciano",
         "nfephp",
@@ -18,7 +18,6 @@
     ],
     "require": {
         "php": "^8.3",
-        "hadder/nfse-nacional": "^1.0",
         "illuminate/support": "^12.0|^13.0",
         "nfephp-org/sped-da": "^1.0",
         "nfephp-org/sped-nfe": "^5.1"
@@ -73,8 +72,7 @@
                 "Danfe": "DiogoGraciano\\Nfephp\\Facades\\Danfe",
                 "Contingency": "DiogoGraciano\\Nfephp\\Facades\\Contingency",
                 "Certificate": "DiogoGraciano\\Nfephp\\Facades\\Certificate",
-                "Utils": "DiogoGraciano\\Nfephp\\Facades\\Utils",
-                "Nfse": "DiogoGraciano\\Nfephp\\Facades\\Nfse"
+                "Utils": "DiogoGraciano\\Nfephp\\Facades\\Utils"
             }
         }
     }

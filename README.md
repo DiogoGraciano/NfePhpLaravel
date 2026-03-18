@@ -6,18 +6,17 @@
 [![PHP Version](https://img.shields.io/packagist/php-v/diogo-graciano/nfephp-laravel.svg?style=flat-square)](https://packagist.org/packages/diogo-graciano/nfephp-laravel)
 [![License](https://img.shields.io/packagist/l/diogo-graciano/nfephp-laravel.svg?style=flat-square)](https://packagist.org/packages/diogo-graciano/nfephp-laravel)
 
-Um pacote Laravel elegante e pratico para integracao com o NFePHP e NFSe Nacional, facilitando a emissao e gestao de Notas Fiscais Eletronicas (NFe/NFCe) e Notas Fiscais de Servico Eletronicas (NFSe) em aplicacoes Laravel.
+Um pacote Laravel elegante e pratico para integracao com o NFePHP, facilitando a emissao e gestao de Notas Fiscais Eletronicas (NFe) e Notas Fiscais de Consumidor Eletronicas (NFCe) em aplicacoes Laravel.
 
 ## Caracteristicas
 
-- Integracao simplificada com o NFePHP e NFSe Nacional
-- **6 Facades independentes** para separacao clara de responsabilidades
+- Integracao simplificada com o NFePHP
+- **5 Facades independentes** para separacao clara de responsabilidades
 - Geracao de DANFE (PDF) para NFe, NFCe, DANFE simplificado e eventos
 - Gerenciamento de contingencias automatico e manual
-- Validacoes robustas para CNPJ, CPF e chaves de acesso (compartilhado NFe/NFSe)
+- Validacoes robustas para CNPJ, CPF e chaves de acesso
 - Helpers utilitarios para formatacao e manipulacao de dados
-- Gerenciamento de certificados digitais (compartilhado NFe/NFSe)
-- Operacoes NFSe (envio DPS, consulta, cancelamento, DANFSE)
+- Gerenciamento de certificados digitais
 - Configuracao flexivel via arquivo de configuracao
 - Testes abrangentes com PHPUnit
 
@@ -27,7 +26,6 @@ Um pacote Laravel elegante e pratico para integracao com o NFePHP e NFSe Naciona
 - Laravel 12.0 ou 13.0
 - NFePHP 5.1 ou superior
 - SPED-DA 1.0 ou superior (geracao de DANFE)
-- NFSe Nacional 1.0 ou superior (para NFSe)
 
 ## Instalação
 
@@ -72,16 +70,15 @@ NFEPHP_CSC_ID="seu_csc_id"
 
 ## Arquitetura
 
-O pacote utiliza 6 facades independentes, cada uma com responsabilidade bem definida:
+O pacote utiliza 5 facades independentes, cada uma com responsabilidade bem definida:
 
 | Facade | Binding | Classe | Responsabilidade |
 |--------|---------|--------|------------------|
 | `Nfe` | `'nfe'` | `NfeManager` | Operacoes NFe (criar, enviar, consultar, cancelar, inutilizar, manifestar) |
 | `Danfe` | `'danfe'` | `DanfeManager` | Geracao de PDF (DANFE, DANFCe, DANFESimples, DAEvento) |
 | `Contingency` | `'contingency'` | `ContingencyManager` | Ativar/desativar/verificar contingencia |
-| `Certificate` | `'certificate'` | `CertificateManager` | Info, validade e expiracao do certificado (compartilhado NFe/NFSe) |
-| `Utils` | `'nfe-utils'` | `UtilsManager` | Validacao, formatacao, helpers de UF (compartilhado NFe/NFSe) |
-| `Nfse` | `'nfse'` | `Nfse` | Operacoes NFSe (envio DPS, consulta, cancelamento, DANFSE) |
+| `Certificate` | `'certificate'` | `CertificateManager` | Info, validade e expiracao do certificado |
+| `Utils` | `'nfe-utils'` | `UtilsManager` | Validacao, formatacao, helpers de UF |
 
 ### Contexto compartilhado (NfeContext)
 
@@ -312,37 +309,6 @@ $timezone = Utils::getTimezoneByUf('SP');       // America/Sao_Paulo
 $chave = Utils::generateNFeKey('35', '2401', '12345678000195', '55', '1', '1', '1', '12345678');
 ```
 
-### Facade Nfse - Operacoes NFSe
-
-```php
-use DiogoGraciano\Nfephp\Facades\Nfse;
-
-// Enviar DPS
-$response = Nfse::sendDps($xmlDps);
-
-// Consultar NFSe por chave
-$response = Nfse::consultNfseByKey($chave);
-
-// Consultar DPS por chave
-$response = Nfse::consultDpsByKey($chave);
-
-// Consultar eventos da NFSe
-$response = Nfse::consultNfseEvents($chave);
-
-// Obter DANFSE (PDF)
-$pdf = Nfse::getDanfse($chave);
-
-// Cancelar NFSe
-$std = new \stdClass();
-$std->chave = '12345678901234567890123456789012345678901234567890';
-$response = Nfse::cancelNfse($std);
-
-// Configuracao
-$config = Nfse::getConfig();
-```
-
-**Nota:** Para operacoes de certificado com NFSe, use a facade `Certificate` que e compartilhada.
-
 ### Uso sem Facade (injecao de dependencia)
 
 ```php
@@ -352,7 +318,6 @@ $danfe = app('danfe');       // DanfeManager
 $contingency = app('contingency'); // ContingencyManager
 $certificate = app('certificate'); // CertificateManager
 $utils = app('nfe-utils');   // UtilsManager
-$nfse = app('nfse');         // Nfse
 
 // Ou via type-hint no construtor/metodo
 use DiogoGraciano\Nfephp\NfeContext;
@@ -391,17 +356,14 @@ src/
 │   ├── ContingencyManager.php  # Gerenciamento de contingencias
 │   ├── DanfeManager.php        # Geracao de DANFE (PDF)
 │   ├── NfeManager.php          # Operacoes NFe/NFCe
-│   ├── NfseManager.php         # Operacoes NFSe
-│   └── UtilsManager.php        # Validacoes e helpers compartilhados
+│   └── UtilsManager.php        # Validacoes e helpers
 ├── Facades/
 │   ├── Nfe.php                 # Facade NFe
 │   ├── Danfe.php               # Facade DANFE
 │   ├── Contingency.php         # Facade Contingencia
 │   ├── Certificate.php         # Facade Certificado
-│   ├── Utils.php               # Facade Utils (NFe + NFSe)
-│   └── Nfse.php                # Facade NFSe
+│   └── Utils.php               # Facade Utils
 ├── NfeContext.php               # Contexto compartilhado (singleton)
-├── Nfse.php                     # Classe principal NFSe
 └── NfephpServiceProvider.php    # Service Provider
 ```
 
@@ -444,14 +406,10 @@ Se voce usava a facade `Nfephp` unica, atualize para as novas facades:
    - O certificado precisa estar configurado para usar operacoes NFe
    - Verifique as variaveis `NFEPHP_CERTIFICATE_PATH` e `NFEPHP_CERTIFICATE_PASSWORD`
 
-4. **NFSe Tools nao inicializado**
-   - Verifique se o certificado esta configurado para NFSe tambem
-
 ## Documentacao Adicional
 
 - [NFePHP Oficial](https://github.com/nfephp-org/sped-nfe)
 - [SPED-DA (DANFE)](https://github.com/nfephp-org/sped-da)
-- [NFSe Nacional](https://github.com/Rainzart/nfse-nacional)
 - [Documentacao Laravel](https://laravel.com/docs)
 - [Especificacoes Tecnicas da NFe](http://www.nfe.fazenda.gov.br/)
 

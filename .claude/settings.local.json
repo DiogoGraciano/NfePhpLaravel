@@ -30,7 +30,9 @@
       "Bash(composer update:*)",
       "Bash(git remote:*)",
       "Bash(vendor/bin/phpunit)",
-      "Bash(vendor/bin/phpunit tests/Unit/NfseTest.php --display-phpunit-notices)"
+      "Bash(vendor/bin/phpunit tests/Unit/NfseTest.php --display-phpunit-notices)",
+      "Bash(find /home/diogo/Projeto/NfePhpLaravel -type f \\\\\\(-name *.md -o -name *.rst -o -name *.txt \\\\\\) ! -path */vendor/*)",
+      "Bash(find /home/diogo/Projeto/NfePhpLaravel/src -type f -name *.php ! -path */vendor/*)"
     ]
   }
 }

@@ -53,13 +53,4 @@ return [
             'proxyPass' => env('NFEPHP_PROXY_PASSWORD', ''),
         ],
     ],
-
-    /*
-     * Configuração da NFSe Nacional
-     *
-     * Utiliza a biblioteca hadder/nfse-nacional para comunicação com o sistema nacional de NFSe
-     */
-    'nfse_config' => [
-        'tpAmb' => (int) env('NFEPHP_NFSE_TP_AMB', env('NFEPHP_TP_AMB', 2)),
-    ],
 ];

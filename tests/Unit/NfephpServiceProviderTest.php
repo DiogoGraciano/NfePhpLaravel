@@ -9,7 +9,6 @@ use DiogoGraciano\Nfephp\Managers\NfeManager;
 use DiogoGraciano\Nfephp\Managers\UtilsManager;
 use DiogoGraciano\Nfephp\NfeContext;
 use DiogoGraciano\Nfephp\NfephpServiceProvider;
-use DiogoGraciano\Nfephp\Nfse;
 use DiogoGraciano\Nfephp\Tests\TestCase;
 use Illuminate\Support\Facades\Config;
 
@@ -52,12 +51,6 @@ class NfephpServiceProviderTest extends TestCase
     {
         $this->assertTrue($this->app->bound('nfe-utils'));
         $this->assertInstanceOf(UtilsManager::class, $this->app->make('nfe-utils'));
-    }
-
-    public function testRegisterNfseBinding(): void
-    {
-        $this->assertTrue($this->app->bound('nfse'));
-        $this->assertInstanceOf(Nfse::class, $this->app->make('nfse'));
     }
 
     public function testNfeContextIsSingleton(): void
