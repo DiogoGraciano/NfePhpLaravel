@@ -22,7 +22,13 @@
       "Bash(./vendor/bin/phpunit --list-tests)",
       "Bash(./vendor/bin/phpunit --no-coverage)",
       "Bash(./vendor/bin/phpunit --no-coverage --display-deprecations)",
-      "Bash(./vendor/bin/phpunit tests/Unit/NfeContextTest.php --no-coverage)"
+      "Bash(./vendor/bin/phpunit tests/Unit/NfeContextTest.php --no-coverage)",
+      "Bash(grep -r \"illuminate\" /home/diogo/Projeto/NfePhpLaravel/src/*.php)",
+      "Bash(wc -l /home/diogo/Projeto/NfePhpLaravel/src/**/*.php)",
+      "WebFetch(domain:packagist.org)",
+      "Bash(composer validate:*)",
+      "Bash(composer update:*)",
+      "Bash(git remote:*)"
     ]
   }
 }
