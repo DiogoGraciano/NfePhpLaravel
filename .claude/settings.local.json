@@ -28,7 +28,8 @@
       "WebFetch(domain:packagist.org)",
       "Bash(composer validate:*)",
       "Bash(composer update:*)",
-      "Bash(git remote:*)"
+      "Bash(git remote:*)",
+      "Bash(vendor/bin/phpunit)"
     ]
   }
 }
